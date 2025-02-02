@@ -1,35 +1,4 @@
 <div class="container mb-5">
-<!--  <img class="listing-photo" [src]="getImageUrl(200, 200, 5)" alt="Exterior photo of {{investment?.titreoperation}}">-->
-<!--  <section class="listing-description">-->
-<!--    <h2 class="listing-heading">{{investment?.entreprise}}</h2>-->
-<!--    <p class="listing-location">{{investment?.ville}}</p>-->
-<!--  </section>-->
-<!--  <section class="listing-features">-->
-<!--    <h2 class="section-heading">About this housing location</h2>-->
-<!--    <ul>-->
-<!--      <li>Units available: </li>-->
-<!--      <li>Does this location have wifi: </li>-->
-<!--      <li>Does this location have laundry: </li>-->
-<!--    </ul>-->
-<!--  </section>-->
-<!--  <section class="listing-apply">-->
-<!--    <h2 class="section-heading">Apply now to live here</h2>-->
-<!--    <form [formGroup]="editForm" (submit)="submitEditForm()">-->
-<!--      <label for="titre-operation">Titre</label>-->
-<!--      <input id="titre-operation" type="text" formControlName="titreoperation">-->
-
-<!--      <label for="entreprise">entreprise</label>-->
-<!--      <input id="entreprise" type="text" formControlName="entreprise">-->
-
-<!--      <label for="ville">Email</label>-->
-<!--      <input id="ville" type="text" formControlName="ville">-->
-<!--      <button type="submit" class="primary">Apply now</button>-->
-<!--    </form>-->
-<!--  </section>-->
-
-
-
-
   <section class='c-container'>
     <div class="card p-3 text-center">
       <section class="listing-description text-start">
@@ -112,7 +81,7 @@
 
             <div class='col-12 col-lg-6'>
               <section class="listing-apply">
-                    <h2 class="section-heading">Modifier</h2>
+                    <h2 class="section-heading">Modifier les données d'investissement</h2>
                     <form [formGroup]="editForm" (submit)="submitEditForm()">
 
                       <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
@@ -126,21 +95,34 @@
                       </div>
 
                       <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
-                        <label class="form-label" for="ville">Ville</label>
-                        <input id="ville" type="text" formControlName="ville" class="form-control">
+                        <label class="form-label" for="enveloppePrev">Enveloppe Prévisionnelle (€)</label>
+                        <input id="enveloppePrev" type="number" step="any" formControlName="enveloppePrev" class="form-control">
+                      </div>
+                      <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
+                        <label class="form-label">Etat d'avancement</label>
+                        <select v-model="form.etatAvancement" class="form-select">
+                          <option value="">Sélectionnez un état</option>
+                          <option value="Opération livrée">Opération livrée</option>
+                          <option value="En Chantier">En Chantier</option>
+                          <option value="Abandonné">Abandonné</option>
+                          <option value="Etude de maîtrise d'œuvre">Etude de maîtrise d'œuvre</option>
+                          <option value="Sélection mandataire">Sélection mandataire</option>
+                          <option value="Suspendue">Suspendue</option>
+                          <option value="Sélection entreprise">Sélection entreprise</option>
+                          <option value="Sélection maîtrise d'œuvre">Sélection maîtrise d'œuvre</option>
+                          <option value="Etudes et diagnostics">Etudes et diagnostics</option>
+                        </select>
                       </div>
                       <button type="submit" class="btn btn-warning">Enregister les modifications</button>
-
                     </form>
                   </section>
             </div>
-
           </div>
         </div>
-
-
-
     </div>
   </section>
 
+  <div *ngIf="notificationMessage" class="toast-notification {{ notificationType }}">
+    {{ notificationMessage }}
+  </div>
 </div>

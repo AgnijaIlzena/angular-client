@@ -18,5 +18,5 @@ export interface Investment {
   maitrise: string;
   modeDevolution: string;
   aneeIndividualisation: Date | string;
-  enveloppePrev: string;
+  enveloppePrev: number;
 }
