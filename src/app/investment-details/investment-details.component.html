@@ -1,0 +1,146 @@
+<div class="container mb-5">
+<!--  <img class="listing-photo" [src]="getImageUrl(200, 200, 5)" alt="Exterior photo of {{investment?.titreoperation}}">-->
+<!--  <section class="listing-description">-->
+<!--    <h2 class="listing-heading">{{investment?.entreprise}}</h2>-->
+<!--    <p class="listing-location">{{investment?.ville}}</p>-->
+<!--  </section>-->
+<!--  <section class="listing-features">-->
+<!--    <h2 class="section-heading">About this housing location</h2>-->
+<!--    <ul>-->
+<!--      <li>Units available: </li>-->
+<!--      <li>Does this location have wifi: </li>-->
+<!--      <li>Does this location have laundry: </li>-->
+<!--    </ul>-->
+<!--  </section>-->
+<!--  <section class="listing-apply">-->
+<!--    <h2 class="section-heading">Apply now to live here</h2>-->
+<!--    <form [formGroup]="editForm" (submit)="submitEditForm()">-->
+<!--      <label for="titre-operation">Titre</label>-->
+<!--      <input id="titre-operation" type="text" formControlName="titreoperation">-->
+
+<!--      <label for="entreprise">entreprise</label>-->
+<!--      <input id="entreprise" type="text" formControlName="entreprise">-->
+
+<!--      <label for="ville">Email</label>-->
+<!--      <input id="ville" type="text" formControlName="ville">-->
+<!--      <button type="submit" class="primary">Apply now</button>-->
+<!--    </form>-->
+<!--  </section>-->
+
+
+
+
+  <section class='c-container'>
+    <div class="card p-3 text-center">
+      <section class="listing-description text-start">
+        <h2 class="listing-heading">{{investment?.titreoperation}}</h2>
+      </section>
+        <div class="card-body container">
+
+          <div class='row mt-3'>
+
+            <div class='col-12 col-lg-6'>
+              <p class="card-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#DF2935" class="me-3 bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                </svg>
+                {{ investment?.ville }}
+              </p>
+              <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#12355B" class="me-3 bi bi-buildings-fill" viewBox="0 0 16 16">
+                  <path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zM2 11h1v1H2zm2 0h1v1H4zm-1 2v1H2v-1zm1 0h1v1H4zm9-10v1h-1V3zM8 5h1v1H8zm1 2v1H8V7zM8 9h1v1H8zm2 0h1v1h-1zm-1 2v1H8v-1zm1 0h1v1h-1zm3-2v1h-1V9zm-1 2h1v1h-1zm-2-4h1v1h-1zm3 0v1h-1V7zm-2-2v1h-1V5zm1 0h1v1h-1z"/>
+                </svg>
+                {{investment?.lycee}}
+              </p>
+              <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#00B295" class="me-3 bi bi-check2-square" viewBox="0 0 16 16">
+                  <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+                  <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
+                </svg>
+                {{investment?.etatAvancement}}
+              </p>
+
+              <div class='row mt-5'>
+                <p class='col text-end small-text'>Entreprise:</p>
+                <p class='col text-start'>{{investment?.entreprise}}</p>
+              </div>
+              <div class='row mb-4'>
+                <p class='col text-end small-text'>Mandataire:</p>
+                <p class='col text-start'>{{investment?.mandataire}}</p>
+              </div>
+
+              <div class='row'>
+                <p class='col text-end small-text'>Montant des Autorisations de Programme votées en Millions d'Euros:</p>
+                <p class='col text-start'> &euro; {{investment?.montantVotes}}</p>
+              </div>
+              <div class='row mb-4'>
+                <p class='col text-end small-text'>Enveloppe prévisionnelle en millions d’euros:</p>
+                <p class='col text-start'>&euro; {{investment?.enveloppePrev}}</p>
+              </div>
+
+              <div class='row'>
+                <p class='col text-end small-text'>Notification du marché:</p>
+                <p class='col text-start'> {{investment?.notification | date:'yyyy-MM-dd'}}</p>
+              </div>
+              <div class='row'>
+                <p class='col text-end small-text'>Attribution par la CAO:</p>
+                <p class='col text-start'>{{investment?.cao | date:'yyyy-MM-dd'}}</p>
+              </div>
+              <div class='row'>
+                <p class='col text-end small-text'>Année de livraison:</p>
+                <p class='col text-start'>{{investment?.annee | date:'yyyy'}}</p>
+              </div>
+              <div class='row mb-4'>
+                <p class='col text-end small-text'>Année d’individualisation: </p>
+                <p class='col text-start'>{{investment?.aneeIndividualisation | date:'yyyy'}}</p>
+              </div>
+
+              <div class='row'>
+                <p class='col text-end small-text'>Code UAI: </p>
+                <p class='col text-start'>{{investment?.codeuai}}</p>
+              </div>
+              <div class='row'>
+                <p class='col text-end small-text'>Maîtrise d'œuvre: </p>
+                <p class='col text-start'>{{investment?.maitrise}}</p>
+              </div>
+              <div class='row'>
+                <p class='col text-end small-text'>Mode de dévolution: </p>
+                <p class='col text-start'>{{investment?.modeDevolution}}</p>
+              </div>
+
+            </div>
+
+            <div class='col-12 col-lg-6'>
+              <section class="listing-apply">
+                    <h2 class="section-heading">Modifier</h2>
+                    <form [formGroup]="editForm" (submit)="submitEditForm()">
+
+                      <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
+                        <label class="form-label" for="titre-operation">Titre</label>
+                        <input id="titre-operation" type="text" formControlName="titreoperation" class="form-control">
+                      </div>
+
+                      <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
+                        <label class="form-label" for="entreprise">Entreprise</label>
+                        <input id="entreprise" type="text" formControlName="entreprise" class="form-control">
+                      </div>
+
+                      <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
+                        <label class="form-label" for="ville">Ville</label>
+                        <input id="ville" type="text" formControlName="ville" class="form-control">
+                      </div>
+                      <button type="submit" class="btn btn-warning">Enregister les modifications</button>
+
+                    </form>
+                  </section>
+            </div>
+
+          </div>
+        </div>
+
+
+
+    </div>
+  </section>
+
+</div>

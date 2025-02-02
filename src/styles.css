@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --title-font: 'Oswald', sans-serif;
+  --text-font: 'Source Sans Pro', sans-serif;
+  --bg-primary: #FBFBFB;
+  --bg-lightblue: #E8F9FF;
+  --bg-milightblue: #C4D9FF;
+  --bg-viol: #C5BAFF;
+  /*--logo:url(../images/Logo.png);*/
+  --btn-color: #D3A656;
+  --btn-edit:#00B295;
+  --btn-delete: #DF2935;
+  --btn-blue: #12355B;
+  --btn-darkviol: #3D3B8E;
+  --text-color: #04080F;;
+  --border-color: #545863
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  font-family: var(--title-font);
+}
