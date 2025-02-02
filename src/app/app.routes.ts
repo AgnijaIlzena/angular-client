@@ -3,13 +3,8 @@ import {InvestmentComponent} from "./investment/investment.component";
 import {InvestmentDetailsComponent} from "./investment-details/investment-details.component";
 
 const routeConfig: Routes = [
-  // {
-  //   path: '',
-  //   component: HomeComponent,
-  //   title: 'Home page'
-  // },
   {
-    path: 'investment',
+    path: '',
     component: InvestmentComponent,
     title: 'Investment page'
   },

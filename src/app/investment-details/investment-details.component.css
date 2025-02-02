@@ -1,3 +1,67 @@
 .listing-heading{
   color: #3D3B8E;
 }
+.section-heading{
+  text-transform: uppercase;
+  font-size: 1.1em;
+  text-align: start;
+  color: #3D3B8E;
+}
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 3s ease-in-out;
+  z-index: 1000;
+}
+
+/* Success Notification */
+.toast-notification.success {
+  background-color: #00B295;
+}
+
+/* Error Notification */
+.toast-notification.error {
+  background-color: #DF2935;
+}
+
+/* Warning Notification */
+.toast-notification.warning {
+  background-color: #ffc107;
+  color: #333;
+}
+
+/* Fade In and Out Animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media(max-width: 992px){
+  .listing-apply{
+    margin-top: 50px;
+  }
+}
+
