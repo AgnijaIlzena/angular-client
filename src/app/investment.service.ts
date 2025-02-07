@@ -12,6 +12,23 @@ export class InvestmentService {
     return await data.json() ?? []
   }
 
+  async getFilteredInvestments(filters: { ville?: string; etatAvancement?: string }): Promise<Investment[]> {
+    let queryParams = [];
+
+    if (filters.ville) {
+      queryParams.push(`ville=${encodeURIComponent(filters.ville)}`);
+    }
+
+    if (filters.etatAvancement) {
+      queryParams.push(`etatAvancement=${encodeURIComponent(filters.etatAvancement)}`);
+    }
+
+    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+    const response = await fetch(`${this.url}/investments/${queryString}`);
+
+    return await response.json() ?? [];
+  }
+
   async getInvestmentLocationById(id: number): Promise<Investment | undefined> {
     const data = await fetch(`${this.url}/investment/${id}`);
     return await data.json() ?? {};

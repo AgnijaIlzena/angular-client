@@ -1,40 +1,80 @@
-.results {
-  display: grid;
-  column-gap: 14px;
-  row-gap: 14px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
-  margin-top: 50px;
-  justify-content: space-around;
+/*.results {*/
+/*  display: grid;*/
+/*  column-gap: 14px;*/
+/*  row-gap: 14px;*/
+/*  grid-template-columns: repeat(auto-fill, minmax(400px, 400px));*/
+/*  margin-top: 50px;*/
+/*  justify-content: space-around;*/
+/*}*/
+
+/*input[type="text"] {*/
+/*  border: solid 1px var(--bg-viol);*/
+/*  padding: 10px;*/
+/*  border-radius: 8px;*/
+/*  margin-right: 4px;*/
+/*  display: inline-block;*/
+/*  width: 30%;*/
+/*}*/
+
+/*button {*/
+/*  padding: 10px;*/
+/*  border: solid 1px var(--btn-darkviol);*/
+/*  background:  var(--btn-darkviol);*/
+/*  color: white;*/
+/*  border-radius: 8px;*/
+/*}*/
+
+/*@media (min-width: 500px) and (max-width: 768px) {*/
+/*  .results {*/
+/*    grid-template-columns: repeat(2, 1fr);*/
+/*  }*/
+/*  input[type="text"] {*/
+/*    width: 70%;*/
+/*  }*/
+/*}*/
+
+/*@media (max-width: 499px) {*/
+/*  .results {*/
+/*    grid-template-columns: 1fr;*/
+/*  }*/
+/*}*/
+
+.table {
+  width: 100%;
+  /*border-collapse: collapse;*/
 }
 
-input[type="text"] {
-  border: solid 1px var(--bg-viol);
+.table th, .table td {
   padding: 10px;
-  border-radius: 8px;
-  margin-right: 4px;
-  display: inline-block;
-  width: 30%;
+  /*border: 1px solid #ddd;*/
+  text-align: left;
 }
 
-button {
-  padding: 10px;
-  border: solid 1px var(--btn-darkviol);
-  background:  var(--btn-darkviol);
+.table thead {
+  background-color: #333;
   color: white;
-  border-radius: 8px;
 }
 
-@media (min-width: 500px) and (max-width: 768px) {
-  .results {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  input[type="text"] {
-    width: 70%;
-  }
+.btn {
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: var(--btn-darkviol);
+  color: white;
+  border-radius: 5px;
 }
 
-@media (max-width: 499px) {
-  .results {
-    grid-template-columns: 1fr;
-  }
+.btn:hover {
+  background-color: var(--btn-blue);
 }
+
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.table .data-row{
+  cursor: pointer;
+}
+

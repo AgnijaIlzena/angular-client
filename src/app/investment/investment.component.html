@@ -1,0 +1,67 @@
+<div class='mt-5'>
+
+  <div class="mb-3">
+    <label class="title-label">Filtrer des investissements</label>
+
+    <div class="row">
+      <!-- Filter by Ville -->
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.ville"
+          placeholder="VILLE"
+        />
+      </div>
+
+      <!-- Filter by État d'Avancement -->
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.etatAvancement"
+          placeholder="ETAT AVANCEMENT"
+        />
+      </div>
+
+      <!-- Buttons: Apply & Reset -->
+      <div class="col-md-4">
+        <button (click)="applyFilters()" class="btn btn-primary">Rechercher</button>
+        <button (click)="resetFilters()" class="btn btn-secondary ml-2">Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover table-sm">
+    <thead>
+    <tr v-if="investments && investments.length">
+      <th scope="col">#</th>
+      <th scope="col">Titreoperation</th>
+      <th scope="col">Entreprise</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Montant des ap votes en meu</th>
+      <th scope="col">Enveloppe prev en meu</th>
+      <th scope="col">État d'avancement</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let investment of investmentLocationList; let i = index"
+        class="data-row"
+        [routerLink]="['/investment-details', investment.id]"
+      >
+      <td>{{ i + 1 }}</td>
+      <td>{{ investment.titreoperation }}</td>
+      <td>{{ investment.entreprise }}</td>
+      <td>{{ investment.ville }}</td>
+      <td>{{ investment.montantVotes | number: '1.2-2' }}</td>
+      <td>{{ investment.enveloppePrev | number: '1.2-2' }}</td>
+      <td>{{ investment.etatAvancement }}</td>
+      <td>
+        <a [routerLink]="['/details', investment.id]" class="btn btn-sm">Voir Détails</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
