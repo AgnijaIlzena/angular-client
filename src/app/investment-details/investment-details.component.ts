@@ -1,6 +1,6 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { InvestmentService } from "../investment.service";
 import { Investment } from "../investment";
@@ -8,7 +8,7 @@ import { Investment } from "../investment";
 @Component({
   selector: 'app-investment-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './investment-details.component.html',
   styleUrls: ['./investment-details.component.css'],
 })
@@ -20,23 +20,30 @@ export class InvestmentDetailsComponent {
   investment: Investment | undefined;
   editForm: FormGroup;
 
-  // Notification variables
   notificationMessage: string | null = null;
   notificationType: 'success' | 'error' | 'warning' = 'success';
 
-  applyForm = new FormGroup({
-    titreoperation: new FormControl(''),
-    entreprise: new FormControl(''),
-    ville: new FormControl(''),
-    enveloppePrev: new FormControl(0)
-  });
+  // form = {
+  //   etatAvancement: ''
+  // };
+
+  // applyForm = new FormGroup({
+  //   titreoperation: new FormControl(''),
+  //   entreprise: new FormControl(''),
+  //   ville: new FormControl(''),
+  //   enveloppePrev: new FormControl(),
+  //   montantVotes: new FormControl(),
+  //   etatAvancement: new FormControl(),
+  // });
 
   constructor(private fb: FormBuilder) {
     this.editForm = this.fb.group({
       titreoperation: [''],
       entreprise: [''],
       ville: [''],
-      enveloppePrev: [0],
+      enveloppePrev: [],
+      montantVotes: [],
+      etatAvancement: [''],
     });
   }
 
@@ -55,6 +62,8 @@ export class InvestmentDetailsComponent {
         entreprise: this.investment.entreprise,
         ville: this.investment.ville,
         enveloppePrev:  Number(this.investment.enveloppePrev) || 0,
+        montantVotes: Number(this.investment.montantVotes) || 0,
+        etatAvancement: this.investment.etatAvancement,
       });
     }
   }
@@ -76,7 +85,8 @@ export class InvestmentDetailsComponent {
          notification: this.investment?.notification || '',
          codeuai: this.investment?.codeuai || '' ,
          longitude: this.investment?. longitude || 0,
-         etatAvancement: this.investment?.etatAvancement || '',
+         // etatAvancement: this.investment?.etatAvancement || '',
+         etatAvancement: formData.etatAvancement || '',
          montantVotes: parseFloat(formData.montantVotes) || 0,
          cao: this.investment?.cao || '' ,
          latitude: this.investment?.latitude || 0,
@@ -112,6 +122,21 @@ export class InvestmentDetailsComponent {
     setTimeout(() => {
       this.notificationMessage = null;
     }, 3000);
+  }
+
+  validateDecimalInput(event: any) {
+    const input = event.target;
+    const regex = /^\d*\.?\d*$/;  // Allows only digits with an optional single dot
+
+    if (!regex.test(input.value)) {
+      input.value = input.value.replace(',', '.'); // Replace commas with dots
+      input.value = input.value.replace(/[^0-9.]/g, ''); // Remove invalid characters
+      const dotCount = (input.value.match(/\./g) || []).length;
+
+      if (dotCount > 1) {
+        input.value = input.value.substring(0, input.value.lastIndexOf('.')); // Keep only one dot
+      }
+    }
   }
 
 }

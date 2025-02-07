@@ -82,7 +82,7 @@
             <div class='col-12 col-lg-6'>
               <section class="listing-apply">
                     <h2 class="section-heading">Modifier les données d'investissement</h2>
-                    <form [formGroup]="editForm" (submit)="submitEditForm()">
+                    <form [formGroup]="editForm" (ngSubmit)="submitEditForm()">
 
                       <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
                         <label class="form-label" for="titre-operation">Titre</label>
@@ -95,12 +95,18 @@
                       </div>
 
                       <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
-                        <label class="form-label" for="enveloppePrev">Enveloppe Prévisionnelle (€)</label>
-                        <input id="enveloppePrev" type="number" step="any" formControlName="enveloppePrev" class="form-control">
+                        <label class="form-label" for="montantVotes">Montant des Autorisations de Programme votées (€)</label>
+                        <input id="montantVotes" type="text" pattern="^\d+(\.\d+)?$" (input)="validateDecimalInput($event)"  formControlName="montantVotes" class="form-control">
                       </div>
+
+                      <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
+                        <label class="form-label" for="enveloppePrev">Enveloppe Prévisionnelle (€)</label>
+                        <input id="enveloppePrev" type="text" pattern="^\d+(\.\d+)?$" (input)="validateDecimalInput($event)" formControlName="enveloppePrev" class="form-control">
+                      </div>
+
                       <div class="mb-3 d-flex flex-column align-items-start justify-content-start">
                         <label class="form-label">Etat d'avancement</label>
-                        <select v-model="form.etatAvancement" class="form-select">
+                        <select formControlName="etatAvancement" class="form-select">
                           <option value="">Sélectionnez un état</option>
                           <option value="Opération livrée">Opération livrée</option>
                           <option value="En Chantier">En Chantier</option>

@@ -19,7 +19,7 @@ export class InvestmentService {
 
   async submitEditInvestment(investmentData: { entreprise: any; ville: any; id: number | undefined; titreoperation: any }): Promise<Investment>  {
     const id = investmentData.id
-    return fetch(`${this.url}/investments/${id}`, {
+    return fetch(`${this.url}/investment/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(investmentData)
