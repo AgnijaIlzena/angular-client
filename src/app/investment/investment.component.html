@@ -5,7 +5,7 @@
 
     <div class="row">
       <!-- Filter by Ville -->
-      <div class="col-md-4">
+      <div class="col-md-4 mb-2">
         <input
           type="text"
           class="form-control"
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Filter by État d'Avancement -->
-      <div class="col-md-4">
+      <div class="col-md-4 mb-2">
         <input
           type="text"
           class="form-control"
@@ -25,13 +25,56 @@
       </div>
 
       <!-- Buttons: Apply & Reset -->
-      <div class="col-md-4">
-        <button (click)="applyFilters()" class="btn btn-primary">Rechercher</button>
-        <button (click)="resetFilters()" class="btn btn-secondary ml-2">Réinitialiser</button>
+      <div class="col-md-4 mb-2">
+        <button (click)="applyFilters()" class="btn apply">Rechercher</button>
+        <button (click)="resetFilters()" class="btn reset ms-2">Réinitialiser</button>
       </div>
     </div>
   </div>
 
+  <!-- Button to toggle charts' visibility -->
+  <button (click)="showCharts = !showCharts" class="btn classic">
+    {{ showCharts ? 'Masquer les Graphiques' : 'Afficher les Graphiques' }}
+  </button>
+
+  <section class="graphs">
+    <div *ngIf="showCharts">
+
+      <div class="row mt-3">
+
+        <div class="col-lg-6 col-md-12">
+          <div class="chart-container mt-3">
+            <h3 class="graph-title">Investissement par entreprise (€M)</h3>
+            <p class="graph-subtitle">Investissement - montant des Autorisations de Programme votées</p>
+            <canvas baseChart
+                    [data]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+            >
+            </canvas>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+          <div class="chart-container mt-3">
+            <h3 class="graph-title">Investissement par ville (€M)</h3>
+            <p class="graph-subtitle">Investissement - montant des Autorisations de Programme votées</p>
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [type]="'pie'"
+                    [labels]="pieChartLabels"
+                    [options]="pieChartOptions"
+            >
+            </canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Data table -->
   <table class="table table-hover table-sm">
     <thead>
     <tr v-if="investments && investments.length">
@@ -58,7 +101,7 @@
       <td>{{ investment.enveloppePrev | number: '1.2-2' }}</td>
       <td>{{ investment.etatAvancement }}</td>
       <td>
-        <a [routerLink]="['/details', investment.id]" class="btn btn-sm">Voir Détails</a>
+        <a [routerLink]="['/details', investment.id]" class="btn btn-sm classic">Voir Détails</a>
       </td>
     </tr>
     </tbody>
