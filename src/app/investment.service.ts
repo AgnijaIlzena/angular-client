@@ -12,6 +12,23 @@ export class InvestmentService {
     return await data.json() ?? []
   }
 
+  async getFilteredInvestments(filters: { ville?: string; etatAvancement?: string }): Promise<Investment[]> {
+    let queryParams = [];
+
+    if (filters.ville) {
+      queryParams.push(`ville=${encodeURIComponent(filters.ville)}`);
+    }
+
+    if (filters.etatAvancement) {
+      queryParams.push(`etatAvancement=${encodeURIComponent(filters.etatAvancement)}`);
+    }
+
+    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+    const response = await fetch(`${this.url}/investments/${queryString}`);
+
+    return await response.json() ?? [];
+  }
+
   async getInvestmentLocationById(id: number): Promise<Investment | undefined> {
     const data = await fetch(`${this.url}/investment/${id}`);
     return await data.json() ?? {};
@@ -19,7 +36,7 @@ export class InvestmentService {
 
   async submitEditInvestment(investmentData: { entreprise: any; ville: any; id: number | undefined; titreoperation: any }): Promise<Investment>  {
     const id = investmentData.id
-    return fetch(`${this.url}/investments/${id}`, {
+    return fetch(`${this.url}/investment/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(investmentData)

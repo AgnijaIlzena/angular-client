@@ -1,0 +1,124 @@
+<div class='mt-5'>
+
+  <!-- loader while data is being fetched -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <!-- Show error message if data fetch fails -->
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+
+    <div class="mb-3">
+      <label class="title-label">Filtrer des investissements</label>
+
+      <div class="row">
+        <!-- Filter by Ville -->
+        <div class="col-md-4 mb-2">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="filters.ville"
+            placeholder="VILLE"
+          />
+        </div>
+
+        <!-- Filter by État d'Avancement -->
+        <div class="col-md-4 mb-2">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="filters.etatAvancement"
+            placeholder="ETAT AVANCEMENT"
+          />
+        </div>
+
+        <!-- Buttons: Apply & Reset -->
+        <div class="col-md-4 mb-2">
+          <button (click)="applyFilters()" class="btn apply">Rechercher</button>
+          <button (click)="resetFilters()" class="btn reset ms-2">Réinitialiser</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button to toggle charts' visibility -->
+    <button (click)="showCharts = !showCharts" class="btn classic">
+      {{ showCharts ? 'Masquer les Graphiques' : 'Afficher les Graphiques' }}
+    </button>
+
+    <section class="graphs">
+      <div *ngIf="showCharts">
+
+        <div class="row mt-3">
+
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-container mt-3">
+              <h3 class="graph-title">Investissement par entreprise (€M)</h3>
+              <p class="graph-subtitle">Investissement - montant des Autorisations de Programme votées</p>
+              <canvas baseChart
+                      [data]="barChartData"
+                      [labels]="barChartLabels"
+                      [options]="barChartOptions"
+              >
+              </canvas>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-container mt-3">
+              <h3 class="graph-title">Investissement par ville (€M)</h3>
+              <p class="graph-subtitle">Investissement - montant des Autorisations de Programme votées</p>
+              <canvas baseChart
+                      [data]="pieChartData"
+                      [type]="'pie'"
+                      [labels]="pieChartLabels"
+                      [options]="pieChartOptions"
+              >
+              </canvas>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Data table -->
+    <table class="table table-hover table-sm">
+      <thead>
+      <tr v-if="investments && investments.length">
+        <th scope="col">#</th>
+        <th scope="col">Titreoperation</th>
+        <th scope="col">Entreprise</th>
+        <th scope="col">Ville</th>
+        <th scope="col">Montant des ap votes en meu</th>
+        <th scope="col">Enveloppe prev en meu</th>
+        <th scope="col">État d'avancement</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let investment of investmentLocationList; let i = index"
+          class="data-row"
+          [routerLink]="['/investment-details', investment.id]"
+        >
+        <td>{{ i + 1 }}</td>
+        <td>{{ investment.titreoperation }}</td>
+        <td>{{ investment.entreprise }}</td>
+        <td>{{ investment.ville }}</td>
+        <td>{{ investment.montantVotes | number: '1.2-2' }}</td>
+        <td>{{ investment.enveloppePrev | number: '1.2-2' }}</td>
+        <td>{{ investment.etatAvancement }}</td>
+        <td>
+          <a [routerLink]="['/details', investment.id]" class="btn btn-sm classic">Voir Détails</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
