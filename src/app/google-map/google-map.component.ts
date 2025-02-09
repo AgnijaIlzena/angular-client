@@ -21,7 +21,6 @@ import { GoogleMap, MapMarker } from '@angular/google-maps';
   `,
   styleUrl: './google-map.component.css'
 })
-// export class GoogleMapComponent implements OnInit {
 export class GoogleMapComponent implements OnChanges {
   @Input() latitude: number = 0;
   @Input() longitude: number = 0;
@@ -29,9 +28,6 @@ export class GoogleMapComponent implements OnChanges {
   zoom: number = 14;
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
 
-  // ngOnInit() {
-  //   this.center = { lat: this.latitude, lng: this.longitude };
-  // }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['latitude'] || changes['longitude']) {
       this.center = { lat: this.latitude, lng: this.longitude };
