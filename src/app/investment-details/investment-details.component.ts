@@ -4,11 +4,13 @@ import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule, FormsModule }
 import { ActivatedRoute } from "@angular/router";
 import { InvestmentService } from "../investment.service";
 import { Investment } from "../investment";
+import { GoogleMapsModule } from '@angular/google-maps';
+import {GoogleMapComponent} from "../google-map/google-map.component";
 
 @Component({
   selector: 'app-investment-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, GoogleMapsModule, GoogleMapComponent],
   templateUrl: './investment-details.component.html',
   styleUrls: ['./investment-details.component.css'],
 })
@@ -23,18 +25,9 @@ export class InvestmentDetailsComponent {
   notificationMessage: string | null = null;
   notificationType: 'success' | 'error' | 'warning' = 'success';
 
-  // form = {
-  //   etatAvancement: ''
-  // };
-
-  // applyForm = new FormGroup({
-  //   titreoperation: new FormControl(''),
-  //   entreprise: new FormControl(''),
-  //   ville: new FormControl(''),
-  //   enveloppePrev: new FormControl(),
-  //   montantVotes: new FormControl(),
-  //   etatAvancement: new FormControl(),
-  // });
+  latitude: number = 48.8566;
+  longitude: number = 2.3522;
+  showCharts: boolean = true;
 
   constructor(private fb: FormBuilder) {
     this.editForm = this.fb.group({
@@ -45,10 +38,6 @@ export class InvestmentDetailsComponent {
       montantVotes: [],
       etatAvancement: [''],
     });
-  }
-
-  getRandomImageId(): number {
-    return Math.floor(Math.random() * 100) + 1;
   }
 
   async ngOnInit() {
@@ -65,6 +54,9 @@ export class InvestmentDetailsComponent {
         montantVotes: Number(this.investment.montantVotes) || 0,
         etatAvancement: this.investment.etatAvancement,
       });
+
+      this.latitude = Number(this.investment.latitude) || this.latitude;
+      this.longitude = Number(this.investment.longitude) || this.longitude;
     }
   }
 
@@ -72,7 +64,7 @@ export class InvestmentDetailsComponent {
      if (this.editForm.valid) {
       const formData = this.editForm.value;
 
-      // Deliver data types to reactively update page after submission of form
+      // define data types to reactively update page after submission of form
        const updatedInvestment: Investment = {
          id: this.investment?.id ?? 0,
          titreoperation: formData.titreoperation || this.investment?.titreoperation || '',
@@ -85,7 +77,6 @@ export class InvestmentDetailsComponent {
          notification: this.investment?.notification || '',
          codeuai: this.investment?.codeuai || '' ,
          longitude: this.investment?. longitude || 0,
-         // etatAvancement: this.investment?.etatAvancement || '',
          etatAvancement: formData.etatAvancement || '',
          montantVotes: parseFloat(formData.montantVotes) || 0,
          cao: this.investment?.cao || '' ,

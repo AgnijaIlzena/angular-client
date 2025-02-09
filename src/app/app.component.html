@@ -1,19 +1,17 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
   :host {
-    --bright-blue: oklch(51.01% 0.274 263.83);
     --font-title:  "Montserrat", serif;
   }
-.brand-link{
-  text-decoration: none;
-}
-  .brand-name{
-    font-size: 1.4em;
-    font-family: var(--font-title);
-    font-weight: 500;
-    color: var(--btn-darkviol);
+  .brand-link{
+    text-decoration: none;
   }
-
+    .brand-name{
+      font-size: 1.4em;
+      font-family: var(--font-title);
+      font-weight: 500;
+      color: var(--btn-darkviol);
+    }
 </style>
 
 <main class="ms-5 mt-5">
@@ -27,11 +25,6 @@
       </div>
     </a>
   </nav>
-<!--  <a [routerLink]="['/']">-->
-<!--    <header class="brand-name">-->
-<!--      <h5>Inv</h5>-->
-<!--    </header>-->
-<!--  </a>-->
   <section class="content">
     <router-outlet></router-outlet>
   </section>

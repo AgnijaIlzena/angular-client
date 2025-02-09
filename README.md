@@ -4,7 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. 
+(Make sure you use http instead of https).
+
+## The list of investment data will be available at the '/' route.
+# Ensure that the REST API (py-rest-api) server server is running properly before starting the Angular server. 
+
+# This angular-client web application is compatible with the REST API 'py-rest-api' project.
 
 ## Code scaffolding
 

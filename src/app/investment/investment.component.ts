@@ -1,9 +1,9 @@
-import {Component, inject, Input, input} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Investment} from "../investment";
 import {InvestmentService} from "../investment.service";
 import {RouterLink, RouterOutlet} from "@angular/router";
-import {InvestmentlocationComponent} from "../investmentlocation/investmentlocation.component";
+// import {InvestmentlocationComponent} from "../investmentlocation/investmentlocation.component";
 import { FormsModule} from "@angular/forms";
 import {ChartData, ChartOptions, ChartType, ChartTypeRegistry} from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
@@ -11,7 +11,7 @@ import { NgChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-investment',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, InvestmentlocationComponent, CommonModule, FormsModule, NgChartsModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule, NgChartsModule],
   templateUrl: 'investment.component.html',
   styleUrls: ['./investment.component.css'],
 })
@@ -19,14 +19,17 @@ export class InvestmentComponent {
   investmentLocationList: Investment[] = [];
   investmentService: InvestmentService = inject(InvestmentService);
 
-  showCharts: boolean = true;  // Controls chart visibility
+  showCharts: boolean = false;
+  isLoading: boolean = false;
+  errorMessage: string | null = null;
 
   filters = {
     ville: '',
     etatAvancement: ''
   };
 
-  // Chart Data
+// Graphs' data
+  // barGraph
   public barChartLabels: string[] = [];
   public barChartData: ChartData<'bar'> = {
     labels: [],
@@ -36,7 +39,7 @@ export class InvestmentComponent {
   };
   public barChartOptions: ChartOptions<'bar'> = {
     responsive: true,
-    indexAxis: 'y', // ✅ Horizontal Bar Chart
+    indexAxis: 'y',
     scales: {
       x: { beginAtZero: true },
       y: { ticks: { font: { size: 12 } } }
@@ -47,6 +50,7 @@ export class InvestmentComponent {
   };
   public barChartType: ChartType = 'bar' as keyof ChartTypeRegistry;
 
+  // pieChart
   pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: [],
     datasets: [
@@ -76,12 +80,22 @@ export class InvestmentComponent {
   }
 
   fetchInvestments(){
-    this.investmentService.getFilteredInvestments(this.filters).then((investmentLocationList: Investment[]) => {
-      console.log("Filtered investments:", investmentLocationList);
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.investmentService.getFilteredInvestments(this.filters)
+      .then((investmentLocationList: Investment[]) => {
       this.investmentLocationList = investmentLocationList;
-      this.prepareChartData();
+      this.prepareBarChartData();
       this.preparePiechartData();
-    });
+    })
+      .catch(error => {
+        console.error("Error fetching investments:", error);
+        this.errorMessage = "Échec du chargement des investissements. Veuillez réessayer plus tard.";
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   applyFilters() {
@@ -93,7 +107,7 @@ export class InvestmentComponent {
     this.fetchInvestments();
   }
 
-  prepareChartData() {
+  prepareBarChartData() {
     const investmentByEnterprise: { [key: string]: number } = {};
 
     this.investmentLocationList.forEach(investment => {
