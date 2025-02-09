@@ -1,14 +1,16 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { InvestmentService } from "../investment.service";
 import { Investment } from "../investment";
+import { GoogleMapsModule } from '@angular/google-maps';
+import {GoogleMapComponent} from "../google-map/google-map.component";
 
 @Component({
   selector: 'app-investment-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, GoogleMapsModule, GoogleMapComponent],
   templateUrl: './investment-details.component.html',
   styleUrls: ['./investment-details.component.css'],
 })
@@ -20,28 +22,22 @@ export class InvestmentDetailsComponent {
   investment: Investment | undefined;
   editForm: FormGroup;
 
-  // Notification variables
   notificationMessage: string | null = null;
   notificationType: 'success' | 'error' | 'warning' = 'success';
 
-  applyForm = new FormGroup({
-    titreoperation: new FormControl(''),
-    entreprise: new FormControl(''),
-    ville: new FormControl(''),
-    enveloppePrev: new FormControl(0)
-  });
+  latitude: number = 48.8566;
+  longitude: number = 2.3522;
+  showCharts: boolean = true;
 
   constructor(private fb: FormBuilder) {
     this.editForm = this.fb.group({
       titreoperation: [''],
       entreprise: [''],
       ville: [''],
-      enveloppePrev: [0],
+      enveloppePrev: [],
+      montantVotes: [],
+      etatAvancement: [''],
     });
-  }
-
-  getRandomImageId(): number {
-    return Math.floor(Math.random() * 100) + 1;
   }
 
   async ngOnInit() {
@@ -55,7 +51,12 @@ export class InvestmentDetailsComponent {
         entreprise: this.investment.entreprise,
         ville: this.investment.ville,
         enveloppePrev:  Number(this.investment.enveloppePrev) || 0,
+        montantVotes: Number(this.investment.montantVotes) || 0,
+        etatAvancement: this.investment.etatAvancement,
       });
+
+      this.latitude = Number(this.investment.latitude) || this.latitude;
+      this.longitude = Number(this.investment.longitude) || this.longitude;
     }
   }
 
@@ -63,7 +64,7 @@ export class InvestmentDetailsComponent {
      if (this.editForm.valid) {
       const formData = this.editForm.value;
 
-      // Deliver data types to reactively update page after submission of form
+      // define data types to reactively update page after submission of form
        const updatedInvestment: Investment = {
          id: this.investment?.id ?? 0,
          titreoperation: formData.titreoperation || this.investment?.titreoperation || '',
@@ -76,7 +77,7 @@ export class InvestmentDetailsComponent {
          notification: this.investment?.notification || '',
          codeuai: this.investment?.codeuai || '' ,
          longitude: this.investment?. longitude || 0,
-         etatAvancement: this.investment?.etatAvancement || '',
+         etatAvancement: formData.etatAvancement || '',
          montantVotes: parseFloat(formData.montantVotes) || 0,
          cao: this.investment?.cao || '' ,
          latitude: this.investment?.latitude || 0,
@@ -112,6 +113,21 @@ export class InvestmentDetailsComponent {
     setTimeout(() => {
       this.notificationMessage = null;
     }, 3000);
+  }
+
+  validateDecimalInput(event: any) {
+    const input = event.target;
+    const regex = /^\d*\.?\d*$/;  // Allows only digits with an optional single dot
+
+    if (!regex.test(input.value)) {
+      input.value = input.value.replace(',', '.'); // Replace commas with dots
+      input.value = input.value.replace(/[^0-9.]/g, ''); // Remove invalid characters
+      const dotCount = (input.value.match(/\./g) || []).length;
+
+      if (dotCount > 1) {
+        input.value = input.value.substring(0, input.value.lastIndexOf('.')); // Keep only one dot
+      }
+    }
   }
 
 }
